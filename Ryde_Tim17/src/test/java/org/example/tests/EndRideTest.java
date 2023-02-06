@@ -3,14 +3,10 @@ package org.example.tests;
 import org.example.pages.DriverPage;
 import org.example.pages.LoginPage;
 import org.example.pages.PassengerPage;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
 
 public class EndRideTest extends TestBase{
     private final String EMAIL_DRIVER = "pera@perovic.com";
@@ -30,11 +26,6 @@ public class EndRideTest extends TestBase{
         passengerPage = new PassengerPage(driver);
     }
 
-    @AfterMethod
-    public void logout() {
-        passengerPage.logoutPassenger();
-    }
-
     @Test
     public void endRide() {
         loginPage = new LoginPage(driver);
@@ -46,8 +37,18 @@ public class EndRideTest extends TestBase{
         Assert.assertTrue(driverPage.hasNoActiveRide());
         driverPage.logoutDriver();
         loginPage.login(EMAIL_PASSENGER, PASSWORD);
-        Assert.assertTrue(passengerPage.passengerIsOpened());
         Assert.assertTrue(passengerPage.canCreateRide());
+        passengerPage.logoutPassenger();
+    }
+
+    @Test
+    public void noActiveRide() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(EMAIL_DRIVER, PASSWORD);
+        Assert.assertTrue(driverPage.DriverIsOpened());
+        Assert.assertTrue(driverPage.hasNoActiveRide());
+        driverPage.logoutDriver();
+
     }
 
     @Test
@@ -64,5 +65,6 @@ public class EndRideTest extends TestBase{
         loginPage.login(EMAIL_PASSENGER2, PASSWORD);
         Assert.assertTrue(passengerPage.passengerIsOpened());
         Assert.assertTrue(passengerPage.canCreateRide());
+        passengerPage.logoutPassenger();
     }
 }
