@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class LoginPage {
+    String url = "http://localhost:4200/login";
     WebDriver driver;
     @FindBy(id = "Email")
     WebElement emailInput;
@@ -30,6 +31,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
+        driver.get(url);
         PageFactory.initElements(driver, this);
     }
 
