@@ -25,11 +25,14 @@ public class LoginPage {
     @FindBy(id = "login-warning")
     WebElement wrongCredentialsText;
 
+    String url = "http://localhost:4200/login";
+
 
 
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
+        driver.get(url);
         PageFactory.initElements(driver, this);
     }
 

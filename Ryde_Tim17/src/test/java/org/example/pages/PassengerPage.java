@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PassengerPage {
@@ -53,8 +54,12 @@ public class PassengerPage {
     @FindBy(id = "getRideBtn")
     WebElement getRideBtn;
 
-    @FindBy(xpath = ".//div[text()='No available drivers!']")
-    WebElement snackBar;
+    @FindBy(xpath = ".//p[text()='Searching for available driver...']")
+    WebElement dialog;
+
+    @FindBy(id = "mat-input-3")
+    WebElement timePicker;
+
 
     public PassengerPage(WebDriver driver){
         this.driver = driver;
@@ -69,7 +74,7 @@ public class PassengerPage {
         logoutButton.click();
     }
 
-    public void createRide(String departure, String destination, String vehicleType, boolean baby, boolean pet, List<String> passengers) {
+    public void createRide(String departure, String destination, String vehicleType, boolean baby, boolean pet, List<String> passengers, boolean scheduled) {
         departureInput.clear();
         departureInput.sendKeys(departure);
 
@@ -96,15 +101,55 @@ public class PassengerPage {
                 break;
         }
 
-        //TODO add passengers and scheduled time
+        if (passengers != null) {
+            addPassengers(passengers);
+        }
+
+        if (scheduled) {
+            scheduleRide();
+        }
 
         getRideBtn.click();
 
     }
 
+    private void scheduleRide() {
+        int hour = LocalDateTime.now().getHour() + 1;
+        timePicker.click();
+
+        driver.findElement(By.xpath(".//span[@class='mdc-button__label' and text()=' " + hour + " ']")).click();
+        driver.findElement(By.xpath(".//span[@class='mdc-button__label' and text()='OK ']")).click();
+
+    }
+
     public boolean noAvailableDrivers() {
-        return (new WebDriverWait(driver, Duration.ofSeconds(10)))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//simple-snack-bar"))).isDisplayed();
+        return (new WebDriverWait(driver, Duration.ofSeconds(15)))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//simple-snack-bar/div[text()=' No available drivers!\n']"))).isDisplayed();
+    }
+    public boolean scheduledRide() {
+        return (new WebDriverWait(driver, Duration.ofSeconds(15)))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//simple-snack-bar/div[text()=' Ride sucessfuly ordered!\n']"))).isDisplayed();
+    }
+
+    public boolean createRide() {
+        return (new WebDriverWait(driver, Duration.ofSeconds(15)))
+                .until(ExpectedConditions.visibilityOf(dialog)).isDisplayed();
+    }
+
+    public boolean passengersAdded(int numOfPassengers) {
+        return (new WebDriverWait(driver, Duration.ofSeconds(3)))
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(".//div[@id='friends']/span"))).size() == numOfPassengers;
+    }
+
+    public void addPassengers(List<String> passengers) {
+        addBtn.click();
+        new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("addPassenger")));
+        for (String passenger: passengers) {
+            addPassenger.clear();
+            addPassenger.sendKeys(passenger);
+            addFriend.click();
+        }
     }
 
 }

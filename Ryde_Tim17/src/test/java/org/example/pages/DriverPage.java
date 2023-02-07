@@ -29,4 +29,11 @@ public class DriverPage {
     public void logoutDriver(){
         logoutButton.click();
     }
+
+    public void startShift() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(toggleButton)).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.attributeToBe(toggleButton, "aria-checked", "true"));
+    }
 }
