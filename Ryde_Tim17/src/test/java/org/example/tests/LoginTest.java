@@ -12,7 +12,7 @@ public class LoginTest extends TestBase{
     private final String EMAIL_ADMIN = "mika@mikic.com";
     private final String EMAIL_DRIVER = "neca@perovic.com";
 
-    private final String EMAIL_PASSENGER = "kosta@perovic.com";
+    private final String EMAIL_PASSENGER = "lilija@perovic.com";
 
     private final String WRONG_EMAIL = "pogresan@mail";
 
@@ -54,6 +54,7 @@ public class LoginTest extends TestBase{
         PassengerPage passengerPage = new PassengerPage(driver);
         Assert.assertTrue(passengerPage.passengerIsOpened());
         passengerPage.logoutPassenger();
+        driver.navigate().refresh();
         Assert.assertTrue(loginPage.loginIsOpened());
     }
     @Test(testName = "Login with wrong credentials")

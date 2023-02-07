@@ -42,6 +42,13 @@ public class DriverPage {
         logoutButton.click();
     }
 
+    public void startShift() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(toggleButton)).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.attributeToBe(toggleButton, "aria-checked", "true"));
+    }
+
     public void endRide() {
         endButton.click();
     }
@@ -56,6 +63,8 @@ public class DriverPage {
     }
 
     public void submitPanic() {
+        (new WebDriverWait(driver, Duration.ofSeconds(5)))
+                .until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
     }
 

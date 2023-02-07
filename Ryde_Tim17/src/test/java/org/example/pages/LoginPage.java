@@ -27,8 +27,6 @@ public class LoginPage {
     WebElement wrongCredentialsText;
 
 
-
-
     public LoginPage(WebDriver driver){
         this.driver = driver;
         driver.get(url);
