@@ -18,6 +18,9 @@ public class PassengerPage {
     @FindBy(css = "h1")
     private WebElement getRydeText;
 
+    @FindBy(id = "getRideBtn")
+    WebElement getRideBtn;
+
     @FindBy(id = "logoutButton")
     WebElement logoutButton;
 
@@ -69,6 +72,11 @@ public class PassengerPage {
     public boolean passengerIsOpened() {
         return (new WebDriverWait(driver, Duration.ofSeconds(10)))
                 .until(ExpectedConditions.textToBePresentInElement(getRydeText, "Get A Ryde"));
+    }
+
+    public boolean canCreateRide() {
+        return (new WebDriverWait(driver, Duration.ofSeconds(10)))
+                .until(ExpectedConditions.elementToBeClickable(getRideBtn)).isDisplayed();
     }
     public void logoutPassenger(){
         logoutButton.click();

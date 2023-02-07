@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class LoginPage {
+    String url = "http://localhost:4200/login";
     WebDriver driver;
     @FindBy(id = "Email")
     WebElement emailInput;
@@ -24,10 +25,6 @@ public class LoginPage {
     List<WebElement> invalidDivs;
     @FindBy(id = "login-warning")
     WebElement wrongCredentialsText;
-
-    String url = "http://localhost:4200/login";
-
-
 
 
     public LoginPage(WebDriver driver){
