@@ -54,9 +54,6 @@ public class PassengerPage {
     @FindBy(id = "addFriend")
     WebElement addFriend;
 
-    @FindBy(id = "getRideBtn")
-    WebElement getRideBtn;
-
     @FindBy(xpath = ".//p[text()='Searching for available driver...']")
     WebElement dialog;
 

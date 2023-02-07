@@ -63,6 +63,8 @@ public class DriverPage {
     }
 
     public void submitPanic() {
+        (new WebDriverWait(driver, Duration.ofSeconds(5)))
+                .until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
     }
 

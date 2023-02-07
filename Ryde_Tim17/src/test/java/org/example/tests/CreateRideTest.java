@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CreateRideTest extends TestBase {
 
-    private final String EMAIL = "kosta@perovic.com";
+    private final String EMAIL = "milan@perovic.com";
 
     private final String PASSWORD = "Pasword123";
 
@@ -28,7 +28,7 @@ public class CreateRideTest extends TestBase {
 
     private final boolean PET_TRANSPORT = true;
 
-    private final String PASSENGER = "mirkovicka01@gmail.com";
+    private final String PASSENGER = "jananikolic25@gmail.com";
 
     private List<String> passengers = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class CreateRideTest extends TestBase {
         driverPage.logoutDriver();
         Assert.assertTrue(loginPage.loginIsOpened());
 
-        loginPage.login(PASSENGER, PASSWORD);
+        loginPage.login(EMAIL, PASSWORD);
 
         passengers.add(PASSENGER);
 
