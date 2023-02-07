@@ -18,6 +18,8 @@ public class HomePage {
   String url = "http://localhost:4200";
   @FindBy(how = How.LINK_TEXT, using="LOGIN")
   WebElement loginBtn;
+  @FindBy(id = "getStarted")
+  WebElement getStartedBtn;
 
   public HomePage(WebDriver driver){
     this.driver = driver;
@@ -26,5 +28,9 @@ public class HomePage {
   }
   public void goToLoginPage() {
     new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(loginBtn)).click();
+  }
+  public boolean homeIsOpened(){
+    return (new WebDriverWait(driver, Duration.ofSeconds(10)))
+            .until(ExpectedConditions.textToBePresentInElement(getStartedBtn, "GET STARTED"));
   }
 }
